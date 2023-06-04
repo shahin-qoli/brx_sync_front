@@ -2,6 +2,8 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import MainDocumentCardsView from '../views/MainDocumentCardsView.vue'
+import EquivalentDocumentCardsView from '../views/EquivalentDocumentCardsView.vue'
+import MappingAttributesView from '../views/MappingAttributesView.vue'
 
 Vue.use(VueRouter)
 
@@ -23,6 +25,15 @@ const routes = [
     path: '/main',
     name: 'main',
     component: MainDocumentCardsView
+  },  
+  {
+    path: '/equivalent',
+    name: 'equivalent',
+    component: EquivalentDocumentCardsView
+  },  {
+    path: '/mapping',
+    name: 'mapping',
+    component: MappingAttributesView
   },
 ]
 
