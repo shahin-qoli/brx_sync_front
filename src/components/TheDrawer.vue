@@ -16,7 +16,10 @@
                 <v-col cols="12">
                 <v-divider/>
                 </v-col>
-
+                <v-col cols="12">
+                <router-link  style="text-decoration: none;" to='/main'><h3>تعریف سند مادر</h3></router-link>
+               
+            </v-col>
             </v-row>
         </v-container>
     </v-navigation-drawer> 
