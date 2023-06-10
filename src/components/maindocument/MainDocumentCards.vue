@@ -73,9 +73,9 @@ export default {
     mainDocuments(){
       return this.$store.getters.getMainDocuments
     }
-  },
+  }, 
   created(){
-      this.loadMainDocuments();
+    this.loadMainDocuments();
   }
 };
 </script>

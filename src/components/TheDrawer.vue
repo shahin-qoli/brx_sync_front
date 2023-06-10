@@ -17,9 +17,14 @@
                 <v-divider/>
                 </v-col>
                 <v-col cols="12">
-                <router-link  style="text-decoration: none;" to='/main'><h3>تعریف سند مادر</h3></router-link>
-               
-            </v-col>
+                    <router-link  style="text-decoration: none;" to='/main'><h3>تعریف سند مادر</h3></router-link>             
+                </v-col>
+                <v-col cols="12">
+                    <router-link  style="text-decoration: none;" to='/equivalent'><h3>تعریف سند معادل</h3></router-link>             
+                </v-col>
+                <v-col cols="12">
+                    <router-link  style="text-decoration: none;" to='/mapping'><h3>معادل سازی سند</h3></router-link>             
+                </v-col>
             </v-row>
         </v-container>
     </v-navigation-drawer> 

@@ -6,7 +6,7 @@
         <v-btn @click="openDialog" color="primary">Create New Item</v-btn>
       </v-toolbar>
       <div class="card-container">
-        <v-card v-for="(object, index) in objectList" :key="index" class="card">
+        <v-card v-for="(object, index) in equivalentDocuments" :key="index" class="card">
           <v-card-title>{{ object.title }}</v-card-title>
           <v-card-text>{{ object.description }}</v-card-text>
         </v-card>
@@ -16,7 +16,30 @@
         <v-card>
           <v-card-title>Create New Item</v-card-title>
           <v-card-text>
-            <!-- Add form or input fields for creating a new item -->
+            <v-container>
+          <v-row>
+            <v-col cols="4" >
+                <v-text-field v-model="createItem.title" label="عنوان"></v-text-field>
+            </v-col>
+            <v-col cols="4" >
+                <v-text-field v-model="createItem.description" label="توضیحات"></v-text-field>
+            </v-col>
+            <v-col cols="4" >
+              <v-select
+              :items="mainDocuments"
+              name="mainDocument"
+              label="سند مادر"
+              solo
+              item-text="title"
+              item-value="id"
+              v-model="createItem.document_id"
+              ></v-select>
+            </v-col>
+            <v-col cols="12">
+                <v-textarea v-model="createItem.json_data" label="مدل داده"></v-textarea>
+            </v-col>
+          </v-row>
+          </v-container>
           </v-card-text>
           <v-card-actions>
             <v-btn color="primary" @click="saveNewItem">Save</v-btn>
@@ -31,13 +54,13 @@
   export default {
     data() {
       return {
-        objectList: [
-          { title: 'Object 1', description: 'Description of Object 1' },
-          { title: 'Object 2', description: 'Description of Object 2' },
-          { title: 'Object 3', description: 'Description of Object 3' },
-          // Add more objects as needed
-        ],
-        dialogVisible: false
+        dialogVisible: false,
+        createItem:{
+        title : '',
+        description: '',
+        json_data: '',
+        document_id: '',
+      }
       };
     },
     methods: {
@@ -50,9 +73,26 @@
       saveNewItem() {
         // Add logic to save the new item
         // After saving, update the objectList and close the dialog
-        this.objectList.push({ title: 'New Object', description: 'New Object Description' });
+        this.$store.dispatch('createEquivalentDocuments',this.createItem)
         this.dialogVisible = false;
+      },
+      loadEquivalentDocuments() {
+        // console.log(this)
+        this.$store.dispatch('loadEquivalentDocuments');
+        this.$store.dispatch('loadMainDocuments')
       }
+
+    },
+    computed:{
+      mainDocuments(){
+        return this.$store.getters.getMainDocuments
+      },
+      equivalentDocuments(){
+        return this.$store.getters.getEquivalentDocuments
+      }
+    },
+    created(){
+        this.loadEquivalentDocuments();
     }
   };
   </script>

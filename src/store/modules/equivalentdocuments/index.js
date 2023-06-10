@@ -9,25 +9,28 @@ export default{
     mutations:{
         setEquivalentDocuments(state, equivalentDocuments){
             state.equivalentDocuments = equivalentDocuments;
+        },
+        createEquivalentDocument(state, payload){
+            state.equivalentDocuments.push(payload)
         }
 
     },
     getters:{
-        equivalentDocuments(state){
+        getEquivalentDocuments(state){
             return state.equivalentDocuments;
         }
     },
     actions:{
-        async loadEquivalentDocuments(context,payload){
+        async loadEquivalentDocuments(context){
             try {
-                const {data: responseData} = await finAgent.get(`/front/job_results?page=${payload.page}&per_page=${payload.itemsPerPage}`);
+                const {data: responseData} = await finAgent.get(`/equivalents`);
                 const equivalentDocuments = []
                 var equivalentDocumentsData = responseData.data;
                 for (const item of equivalentDocumentsData) {
                     const equivalentDocument= {
                         ...item
                     }
-                    jobs.push(equivalentDocuments); 
+                    equivalentDocuments.push(equivalentDocument); 
                 }
                 
                 context.commit('setEquivalentDocuments', equivalentDocuments)
@@ -39,7 +42,23 @@ export default{
                 );
                 throw error;
              } 
-        }
+        },
+        async createEquivalentDocuments(context,payload){
+            try{
+                var data = {equivalent: payload}
+                console.log(data)
+                const {data:responseData} = await finAgent.post('/equivalents', data)
+                if (responseData){
+                    context.commit('createEquivalentDocument', payload)
+                }
+            } catch (err) {
+                //console.log(err.response);
+                const error = new Error(
+                    err.response.data.error || 'Failed to fetch'
+                );
+                throw error;
+             }
+        },
 
     }
 }
