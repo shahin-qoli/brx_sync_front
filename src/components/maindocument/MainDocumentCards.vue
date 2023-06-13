@@ -47,7 +47,7 @@ export default {
       createItem:{
         title : '',
         description: '',
-        json_data: '',
+        json_data: {},
       }
     };
   },

@@ -10,10 +10,12 @@
             <v-card-text>
               <v-select
                 v-model="selectedOption"
-                :items="options"
+                :items="equivalentDocuments"
+                item-text="title"
+                item-value="id"
                 label="Options"
               ></v-select>
-                            <div v-if="selectedOption">
+              <div v-if="selectedOption">
                 Content for option: {{ selectedOption }}
               </div>
               <div v-else>
@@ -29,7 +31,7 @@
               Loaded attributes
             </v-card-title>
             <v-card-text>
-              <v-chip v-for="(attribute, index) in selectedAttributes" :key="index" label>
+              <v-chip v-for="(attribute, index) in equivalentAttributes" :key="index" label>
                 {{ attribute }}
               </v-chip>
             </v-card-text>
@@ -44,29 +46,33 @@
           </v-card-title>
           <v-card-text>
             <v-form ref="myForm">
-              <v-row v-for="(attribute, index) in selectedAttributes" :key="index">
+              <v-row v-for="(attribute, index) in documentAttributes" :key="index">
                 <v-col cols="4">
-                    <v-subheader>{{attribute.placeholder}}</v-subheader>
+                    <v-subheader>{{attribute}}</v-subheader>
                 </v-col>
-                <v-col cols="4">
+                <v-col cols="2">
                   <v-text-field
-                    v-model="attribute.value"
-                    :label="attribute.label"
-                    :placeholder="attribute.placeholder"
-                    :rules="attribute.rules"
+                    v-model="formFields[attribute].value"
+                    :label="attribute"
+                    :placeholder="attribute"
+                  ></v-text-field>
+                </v-col>
+                <v-col cols="2">
+                  <v-text-field
+                    v-model="formFields[attribute].fixedAmount"
+                    :placeholder="fixedAmount"
                   ></v-text-field>
                 </v-col>
                 <v-col cols="1">
                   <v-checkbox
-                    v-model="attribute.uniquer"
-                    label="Uniquer"
+                    v-model="formFields[attribute].uniquer"
                     hide-details
                   ></v-checkbox>
                 </v-col>
               </v-row>
               <v-row>
                 <v-col cols="12">
-                  <v-btn color="primary" @click="submitForm">Submit</v-btn>
+                  <v-btn color="primary"  @click="submitForm" >Submit</v-btn>
                 </v-col>
               </v-row>
             </v-form>
@@ -83,29 +89,61 @@
     data() {
       return {
         selectedOption: null,
-        options: ['Option 1', 'Option 2', 'Option 3'],
-        attributes: [
-        { label: 'Attribute 1', placeholder: 'Enter attribute 1', value: '', rules: [], uniquer: true },
-        { label: 'Attribute 2', placeholder: 'Enter attribute 2', value: '', rules: [], uniquer: false },
-        { label: 'Attribute 3', placeholder: 'Enter attribute 3', value: '', rules: [], uniquer: false },
-      ],
+        formFields: {},
+        uniquer:'',
       };
     },
     computed: {
-      selectedAttributes() {
-        // Simulating attributes related to the selected option
-        switch (this.selectedOption) {
-          case 'Option 1':
-            return ['Attribute 1', 'Attribute 2'];
-          case 'Option 2':
-            return ['Attribute 3', 'Attribute 4'];
-          case 'Option 3':
-            return ['Attribute 5', 'Attribute 6'];
-          default:
-            return [];
-        }
+      equivalentDocuments(){
+        return this.$store.getters.getEquivalentDocuments
+      },equivalentAttributes(){
+        return this.$store.getters.getEquivalentAttributes
+      },
+      documentAttributes(){
+        return this.$store.getters.getDocumentAttributes
       },
     },
-  };
+    methods:{
+      initializeFormFields() {
+    this.documentAttributes.forEach(attribute => {
+      this.$set(this.formFields, attribute, { value: '', uniquer: false, fixedAmount: '' });
+    });
+},
+      loadEquivalentDocuments() {
+        // console.log(this)
+        this.$store.dispatch('loadEquivalentDocuments');
+    },
+    async loadAttributes() {
+    try {
+      await this.$store.dispatch('loadAttributes', this.selectedOption);
+      this.initializeFormFields();
+    } catch (error) {
+      console.error(error);
+    }
+  },
+    submitForm() {
+      // Access the input values and attributes here
+      const payload = {
+        equivalent_id : this.selectedOption,
+        data : this.formFields,
+      }
+      this.$store.dispatch('saveAttributes', payload);
+    },
+  },
+  watch:{
+    selectedOption:{
+      handler(){
+        if (this.selectedOption) {
+      this.loadAttributes(); 
+        }
+      },  deep: true
+    }
+  },
+    created(){
+        this.loadEquivalentDocuments();
+       
+        
+    }
+  }
   </script>
   
