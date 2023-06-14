@@ -4,6 +4,7 @@ import HomeView from '../views/HomeView.vue'
 import MainDocumentCardsView from '../views/MainDocumentCardsView.vue'
 import EquivalentDocumentCardsView from '../views/EquivalentDocumentCardsView.vue'
 import MappingAttributesView from '../views/MappingAttributesView.vue'
+import RequestDocumentsView from '../views/RequestDocumentsView.vue'
 
 Vue.use(VueRouter)
 
@@ -34,6 +35,10 @@ const routes = [
     path: '/mapping',
     name: 'mapping',
     component: MappingAttributesView
+  },{
+    path: '/requestdocs',
+    name: 'mapping',
+    component: RequestDocumentsView
   },
 ]
 

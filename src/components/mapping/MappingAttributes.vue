@@ -46,26 +46,26 @@
           </v-card-title>
           <v-card-text>
             <v-form ref="myForm">
-              <v-row v-for="(attribute, index) in documentAttributes" :key="index">
+              <v-row v-for="(object, index) in formFields" :key="index">
                 <v-col cols="4">
-                    <v-subheader>{{attribute}}</v-subheader>
+                    <v-subheader>{{object.equivalentAttribute}}</v-subheader>
                 </v-col>
                 <v-col cols="2">
                   <v-text-field
-                    v-model="formFields[attribute].value"
-                    :label="attribute"
-                    :placeholder="attribute"
+                    v-model="object.mainAttribute"
+                    :label="object.mainAttribute"
+                    :placeholder="object.mainAttribute"
                   ></v-text-field>
                 </v-col>
                 <v-col cols="2">
                   <v-text-field
-                    v-model="formFields[attribute].fixedAmount"
-                    :placeholder="fixedAmount"
+                    v-model="object.fixedAmount"
+
                   ></v-text-field>
                 </v-col>
                 <v-col cols="1">
                   <v-checkbox
-                    v-model="formFields[attribute].uniquer"
+                    v-model="object.uniquer"
                     hide-details
                   ></v-checkbox>
                 </v-col>
@@ -89,7 +89,7 @@
     data() {
       return {
         selectedOption: null,
-        formFields: {},
+        formFields: [],
         uniquer:'',
       };
     },
@@ -106,7 +106,12 @@
     methods:{
       initializeFormFields() {
     this.documentAttributes.forEach(attribute => {
-      this.$set(this.formFields, attribute, { value: '', uniquer: false, fixedAmount: '' });
+      this.formFields.push({
+        mainAttribute: '',
+        equivalentAttribute: attribute,
+        uniquer: false,
+        fixedAmount: ''
+      })
     });
 },
       loadEquivalentDocuments() {
@@ -127,6 +132,7 @@
         equivalent_id : this.selectedOption,
         data : this.formFields,
       }
+      console.log(payload)
       this.$store.dispatch('saveAttributes', payload);
     },
   },
@@ -140,9 +146,7 @@
     }
   },
     created(){
-        this.loadEquivalentDocuments();
-       
-        
+        this.loadEquivalentDocuments();   
     }
   }
   </script>
