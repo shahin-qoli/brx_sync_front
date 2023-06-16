@@ -5,6 +5,7 @@ import MainDocumentCardsView from '../views/MainDocumentCardsView.vue'
 import EquivalentDocumentCardsView from '../views/EquivalentDocumentCardsView.vue'
 import MappingAttributesView from '../views/MappingAttributesView.vue'
 import RequestDocumentsView from '../views/RequestDocumentsView.vue'
+import RequestDashboardView from '../views/RequestDashboardView.vue'
 
 Vue.use(VueRouter)
 
@@ -39,6 +40,10 @@ const routes = [
     path: '/requestdocs',
     name: 'mapping',
     component: RequestDocumentsView
+  },{
+    path: '/requestdashboard',
+    name: 'mapping',
+    component: RequestDashboardView
   },
 ]
 
