@@ -23,7 +23,13 @@
                     <router-link  style="text-decoration: none;" to='/equivalent'><h3>تعریف سند معادل</h3></router-link>             
                 </v-col>
                 <v-col cols="12">
-                    <router-link  style="text-decoration: none;" to='/mapping'><h3>معادل سازی سند</h3></router-link>             
+                    <router-link  style="text-decoration: none;" to='/mapping'><h3>معادل سازی سند</h3></router-link>            
+                </v-col>
+                <v-col cols="12">
+                    <router-link  style="text-decoration: none;" to='/requestdocs'><h3>ایجاد درخواست</h3></router-link>             
+                </v-col>
+                <v-col cols="12">
+                    <router-link  style="text-decoration: none;" to='/requestdashboard'><h3>داشبورد درخواست ها</h3></router-link>             
                 </v-col>
             </v-row>
         </v-container>

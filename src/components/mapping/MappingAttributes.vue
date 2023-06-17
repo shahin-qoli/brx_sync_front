@@ -53,19 +53,20 @@
                 <v-col cols="2">
                   <v-text-field
                     v-model="object.mainAttribute"
-                    :label="object.mainAttribute"
+                    label="Atrribute"
                     :placeholder="object.mainAttribute"
                   ></v-text-field>
                 </v-col>
                 <v-col cols="2">
                   <v-text-field
                     v-model="object.fixedAmount"
-
+                    label="FixedAmount"
                   ></v-text-field>
                 </v-col>
                 <v-col cols="1">
                   <v-checkbox
                     v-model="object.uniquer"
+                    label="Uniquer"
                     hide-details
                   ></v-checkbox>
                 </v-col>
