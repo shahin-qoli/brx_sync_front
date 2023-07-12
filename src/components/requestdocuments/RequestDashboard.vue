@@ -48,6 +48,14 @@
                         :server-items-length="itemCount"
                         class="elevation-1"
                         >
+                        <template v-slot:header="" >
+                            <thead>
+                            <tr>
+                                <th colspan="6" align="center">سند مادر</th>
+                                <th colspan="2">سند معادل</th>
+                            </tr>
+                            </thead>
+                        </template>
                         <template v-slot:[`item.controls`]="props">
                          <v-btn  class="mx-2" small  @click="retryJob(props.item)">
                         <v-icon>mdi-check-outline</v-icon>
@@ -75,73 +83,7 @@ export default{
             selectedOption: null,
             mainDocument:"something",
             equivalentDocument:"equivalent",
-            raws:[
-                {
-                    id: 1,
-                    mainDocument:{
-                    "token": "{{token}}",
-                    "marketdoc": {
-                        "doctype": 23,
-                        "cardcode": "c50000",
-                        "marketingapprelatedid": "testodoo12",
-                        "doctime": "2022-10-04T13:20:26.1134028+03:30",
-                        "marketinglines": [
-                            {
-                                "itemcode": "5320",
-                                "itemqty": 2.0,
-                                "towhscode": "twhsshah"
-                            },
-                            {
-                                "itemcode": "5340",
-                                "itemqty": 2.0,
-                                "towhscode": "twhsshah"
-                            }
-                        ],
-                        "deliveraddress": "تهرانسر، بلوار لاله، کوچه 12 شرقی پلاک 12 طبقه دوم :, , , b",
-                        "marketingdetails": {
-                            "invtype": 1,
-                            "settletype": 1,
-                            "paymenttime": 1,
-                            "campaign": 0,
-                            "slpcode": 41,
-                            "deliverytype": 11,
-                            "payduedate": 1,
-                            "taxonurl": "10646"
-                        },
-                        "paymentdetails": {
-                            "realpayerinfo": ""
-                        },
-                        "comment": "",
-                        "documenttotal": 0.0,
-                        "relatedteam": 1
-                    }
-                },
-                equivalentDocument:{
-                    "customer": "c50000",
-                    "sourceField": "testodoo12",
-                    "date": "2022-10-04T13:20:26.1134028+03:30",
-                    "stockCode": "b333",
-                    "orderDetails": [
-                        {
-                            "item": "5320",
-                            "quantity": 2.0,
-                            "price": 34000
-                        },
-                                {
-                            "item": "5322",
-                            "quantity": 7.0,
-                            "price": 37000
-                        }
-                    ],
-                    "paymentdetails": {
-                        "paidAmount": 440000
-                    },
-                    "description": "",
-                    "totalAmount": 0.0,
-                    "customerGroup": 1
-                },
-                }
-            ]
+            raws:[]
         }
     },
     computed:{
@@ -154,29 +96,47 @@ export default{
             value: "id",
           },
           {
-            text: "سند مادر",
+            text: "نوع سند",
             align: "center",
             //sortable: false,
-            value: "mainDocument",
+            value: "mainDocumentType",
           },
           {
-            text: "سند معادل",
+            text: "کد سند",
             align: "center",
             //sortable: false,
-            value: "equivalentDocument",
+            value: "mainDocumentId",
           },
           {
-            text: "عملیات",
+            text: "شماره سند",
             align: "center",
             //sortable: false,
-            value: "controls",
+            value: "mainDocumentNumber",
           },
           {
-            text: "پاسخ",
+            text: "تاریخ سند",
             align: "center",
             //sortable: false,
-            value: "response",
+            value: "mainDocumentDate",
           },
+          {
+            text:"جمع سند",
+            align: "center",
+            //sortable: false,
+            value: "mainDocumentTotal",
+          },
+          {
+            text:"نوع سند",
+            align: "center",
+            //sortable: false,
+            value: "equivalentDocumentType",
+          },          {
+            text:"شماره سند",
+            align: "center",
+            //sortable: false,
+            value: "equivalentDocumentId",
+          }
+        
             ]
         }
     }
